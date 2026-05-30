@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>лолівлілв</title>
+
+  <style>
+    :root {
+      --bg-1: #08070d;
+      --bg-2: #17101e;
+      --bg-3: #321623;
+      --accent: #ff315f;
+      --accent-2: #7b203a;
+      --soft: #2a1a2d;
+      --ink: #fff3f8;
+      --muted: #c7aebb;
+      --card: rgba(12, 10, 18, 0.84);
+      --line: rgba(255, 49, 95, 0.28);
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.46);
+      --glow: rgba(255, 49, 95, 0.28);
+      --button-text: #fff5f8;
+    }
+
+    body.cute-mode {
+      --bg-1: #ffd6e8;
+      --bg-2: #f8e8ff;
+      --bg-3: #d6f0ff;
+      --accent: #ff70a6;
+      --accent-2: #6bc9f4;
+      --soft: #fff7fb;
+      --ink: #413345;
+      --muted: #756779;
+      --card: rgba(255, 255, 255, 0.88);
+      --line: rgba(255, 112, 166, 0.24);
+      --shadow: 0 24px 70px rgba(93, 88, 133, 0.22);
+      --glow: rgba(255, 112, 166, 0.32);
+      --button-text: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.14) 0 4px, transparent 5px),
+        radial-gradient(circle at 86% 20%, rgba(255, 49, 95, 0.14) 0 7px, transparent 8px),
+        linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 46%, var(--bg-3) 100%);
+      overflow-x: hidden;
+      transition: color 700ms ease, background 900ms ease;
+    }
+
+    body.cute-mode {
+      background:
+        radial-gradient(circle at 16% 18%, rgba(255, 255, 255, 0.86) 0 7px, transparent 8px),
+        radial-gradient(circle at 82% 14%, rgba(255, 255, 255, 0.72) 0 5px, transparent 6px),
+        radial-gradient(circle at 88% 78%, rgba(255, 255, 255, 0.78) 0 6px, transparent 7px),
+        linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 47%, var(--bg-3) 100%);
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 700ms ease, filter 700ms ease, transform 700ms ease;
+    }
+
+    body::before {
+      width: min(56vw, 430px);
+      aspect-ratio: 1;
+      left: -120px;
+      top: -140px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 62% 46%, rgba(255, 255, 255, 0.72) 0 14%, transparent 15%),
+        radial-gradient(circle at 56% 44%, rgba(255, 255, 255, 0.22) 0 26%, transparent 27%),
+        radial-gradient(circle, rgba(255, 49, 95, 0.16), transparent 66%);
+      filter: blur(0.2px);
+      opacity: 0.72;
+    }
+
+    body::after {
+      width: 280px;
+      height: 160px;
+      right: -70px;
+      bottom: 7vh;
+      border-radius: 48%;
+      background:
+        linear-gradient(45deg, transparent 45%, rgba(255, 49, 95, 0.24) 46% 54%, transparent 55%),
+        linear-gradient(-45deg, transparent 45%, rgba(124, 71, 104, 0.36) 46% 54%, transparent 55%);
+      opacity: 0.78;
+      transform: rotate(11deg);
+    }
+
+    body.cute-mode::before {
+      background:
+        radial-gradient(circle at 44% 42%, rgba(255, 255, 255, 0.92) 0 9px, transparent 10px),
+        radial-gradient(circle at 58% 56%, rgba(255, 255, 255, 0.82) 0 7px, transparent 8px),
+        radial-gradient(circle, rgba(255, 112, 166, 0.24), rgba(107, 201, 244, 0.18) 58%, transparent 68%);
+      opacity: 0.92;
+      transform: translate(24px, 18px) scale(0.86);
+    }
+
+    body.cute-mode::after {
+      background:
+        linear-gradient(45deg, transparent 45%, rgba(255, 112, 166, 0.28) 46% 54%, transparent 55%),
+        linear-gradient(-45deg, transparent 45%, rgba(107, 201, 244, 0.25) 46% 54%, transparent 55%);
+      opacity: 0.86;
+      transform: rotate(-8deg) scale(1.05);
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 28px 16px;
+    }
+
+    .wrap {
+      width: min(940px, 100%);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+      gap: clamp(20px, 4vw, 52px);
+      align-items: center;
+    }
+
+    .intro {
+      min-width: 0;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 36px;
+      margin: 0 0 14px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      font-size: 14px;
+      font-weight: 800;
+      transition: color 650ms ease, background 650ms ease, border-color 650ms ease;
+    }
+
+    body.cute-mode .kicker {
+      border-color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 12px 30px rgba(255, 112, 166, 0.12);
+    }
+
+    h1 {
+      max-width: 12ch;
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(40px, 9vw, 78px);
+      line-height: 0.96;
+      letter-spacing: 0;
+      text-shadow: 0 0 24px var(--glow);
+      transition: color 650ms ease, text-shadow 650ms ease;
+    }
+
+    .lead {
+      max-width: 540px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(17px, 2.35vw, 21px);
+      line-height: 1.55;
+      transition: color 650ms ease;
+    }
+
+    .mini-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .mini-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.07);
+      font-size: 14px;
+      font-weight: 800;
+      transition: color 650ms ease, background 650ms ease, border-color 650ms ease;
+    }
+
+    body.cute-mode .mini-note {
+      border-color: rgba(255, 255, 255, 0.68);
+      background: rgba(255, 255, 255, 0.54);
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      padding: clamp(22px, 5vw, 34px);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      text-align: center;
+      overflow: hidden;
+      animation: appear 720ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      backdrop-filter: blur(18px);
+      transition: background 700ms ease, border-color 700ms ease, box-shadow 700ms ease;
+    }
+
+    body.cute-mode .card {
+      border-color: rgba(255, 255, 255, 0.78);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      pointer-events: none;
+      transition: border-color 650ms ease;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0 42%, rgba(255, 255, 255, 0.1) 50%, transparent 58% 100%);
+      opacity: 0;
+      transform: translateX(-100%);
+      pointer-events: none;
+    }
+
+    body.cute-mode .card::after {
+      animation: shine 900ms ease 80ms;
+    }
+
+    .sticker {
+      position: relative;
+      width: min(196px, 58vw);
+      aspect-ratio: 1.2;
+      margin: 0 auto 18px;
+    }
+
+    .scene {
+      position: absolute;
+      inset: 4%;
+      border: 3px solid rgba(255, 255, 255, 0.13);
+      border-radius: 8px;
+      background:
+        linear-gradient(145deg, transparent 49%, rgba(255, 49, 95, 0.24) 50% 55%, transparent 56%),
+        linear-gradient(215deg, transparent 49%, rgba(101, 43, 68, 0.34) 50% 55%, transparent 56%),
+        linear-gradient(180deg, rgba(27, 15, 31, 0.96), rgba(10, 8, 16, 0.96));
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.32), inset 0 0 26px rgba(255, 49, 95, 0.16);
+      transition: background 750ms ease, border-color 750ms ease, box-shadow 750ms ease, transform 750ms ease;
+    }
+
+    body.cute-mode .scene {
+      border-color: rgba(237, 79, 134, 0.38);
+      background:
+        linear-gradient(145deg, transparent 49%, rgba(107, 201, 244, 0.42) 50% 55%, transparent 56%),
+        linear-gradient(215deg, transparent 49%, rgba(255, 112, 166, 0.42) 50% 55%, transparent 56%),
+        linear-gradient(180deg, #fff 0%, #fff8fb 100%);
+      box-shadow: 0 18px 34px rgba(255, 112, 166, 0.2);
+      transform: rotate(1deg);
+    }
+
+    .scene::before,
+    .scene::after {
+      content: "";
+      position: absolute;
+      transition: opacity 650ms ease, transform 650ms ease, background 650ms ease;
+    }
+
+    .scene::before {
+      width: 56px;
+      height: 56px;
+      left: 16px;
+      top: 14px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 64% 42%, rgba(12, 10, 18, 0.95) 0 18%, transparent 19%),
+        #f6e7c9;
+      box-shadow: 0 0 28px rgba(246, 231, 201, 0.2);
+      opacity: 0.8;
+    }
+
+    body.cute-mode .scene::before {
+      width: 84px;
+      height: 48px;
+      left: 50%;
+      top: 38%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 34%, #ff8fbc 0 13px, transparent 14px),
+        radial-gradient(circle at 70% 34%, #ff8fbc 0 13px, transparent 14px);
+      box-shadow: none;
+      opacity: 1;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .scene::after {
+      left: 38%;
+      top: 22px;
+      width: 66px;
+      height: 92px;
+      background:
+        linear-gradient(105deg, transparent 0 42%, rgba(255, 49, 95, 0.46) 43% 47%, transparent 48% 100%),
+        linear-gradient(74deg, transparent 0 54%, rgba(255, 255, 255, 0.18) 55% 58%, transparent 59% 100%);
+      opacity: 0.88;
+    }
+
+    body.cute-mode .scene::after {
+      left: 50%;
+      top: 55%;
+      width: 72px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(255, 143, 188, 0.88);
+      opacity: 0.84;
+      transform: translate(-50%, -50%) rotate(-2deg);
+    }
+
+    .badge {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      display: grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255, 255, 255, 0.16);
+      border-radius: 50%;
+      color: var(--button-text);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 14px 32px var(--glow);
+      transform: translate(-50%, -42%);
+      animation: floaty 2.5s ease-in-out infinite;
+      font-size: 28px;
+      transition: border-color 650ms ease, background 650ms ease, box-shadow 650ms ease, transform 650ms ease;
+    }
+
+    body.cute-mode .badge {
+      border-color: #fff;
+    }
+
+    .spark {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      color: var(--accent);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+      font-size: 17px;
+      animation: twinkle 2s ease-in-out infinite;
+      transition: color 650ms ease, background 650ms ease, box-shadow 650ms ease;
+    }
+
+    body.cute-mode .spark {
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 10px 24px rgba(107, 201, 244, 0.24);
+    }
+
+    .spark.one {
+      left: 4%;
+      top: 14%;
+    }
+
+    .spark.two {
+      right: 2%;
+      top: 18%;
+      color: var(--accent-2);
+      animation-delay: 420ms;
+    }
+
+    .spark.three {
+      right: 14%;
+      bottom: 2%;
+      animation-delay: 780ms;
+    }
+
+    .card-title {
+      position: relative;
+      margin: 0;
+      color: var(--accent);
+      font-size: clamp(25px, 6vw, 34px);
+      line-height: 1.12;
+      letter-spacing: 0;
+      transition: color 650ms ease;
+    }
+
+    .card-copy {
+      position: relative;
+      margin: 12px auto 0;
+      max-width: 31ch;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.5;
+      transition: color 650ms ease;
+    }
+
+    .button-row {
+      position: relative;
+      margin-top: 24px;
+    }
+
+    button {
+      width: min(100%, 270px);
+      min-height: 54px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--button-text);
+      background: linear-gradient(135deg, var(--accent), #8d1838 48%, var(--accent-2));
+      box-shadow: 0 18px 34px var(--glow);
+      cursor: pointer;
+      font: 800 17px/1 Arial, Helvetica, sans-serif;
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease, background 650ms ease;
+    }
+
+    body.cute-mode button {
+      background: linear-gradient(135deg, var(--accent), #ff8fbc 48%, var(--accent-2));
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 22px 42px var(--glow);
+      filter: saturate(1.1);
+    }
+
+    button:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    button:focus-visible {
+      outline: 4px solid rgba(255, 255, 255, 0.34);
+      outline-offset: 4px;
+    }
+
+    body.cute-mode button:focus-visible {
+      outline-color: rgba(107, 201, 244, 0.5);
+    }
+
+    .message {
+      position: relative;
+      display: grid;
+      place-items: center;
+      gap: 8px;
+      min-height: 96px;
+      margin-top: 22px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: clamp(17px, 4.3vw, 20px);
+      font-weight: 800;
+      line-height: 1.35;
+      transition: transform 220ms ease, opacity 220ms ease, color 650ms ease, background 650ms ease, border-color 650ms ease;
+    }
+
+    body.cute-mode .message {
+      border-color: rgba(107, 201, 244, 0.28);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(223, 244, 255, 0.52));
+    }
+
+    .message.is-changing {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+
+    .message-artist {
+      display: block;
+      color: var(--accent);
+      font-size: 0.86em;
+      letter-spacing: 0;
+      transition: color 650ms ease;
+    }
+
+    .counter {
+      position: relative;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      transition: color 650ms ease;
+    }
+
+    .music-stage {
+      position: relative;
+      display: none;
+      min-height: 330px;
+      margin-top: 18px;
+      border: 1px solid rgba(107, 201, 244, 0.24);
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255, 112, 166, 0.18), transparent 30%),
+        radial-gradient(circle at 80% 78%, rgba(107, 201, 244, 0.2), transparent 34%),
+        rgba(255, 255, 255, 0.34);
+      overflow: hidden;
+    }
+
+    body.cute-mode .music-stage {
+      display: block;
+      animation: stageIn 620ms ease both;
+    }
+
+    .song-button {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: clamp(108px, 36%, 150px);
+      min-height: 42px;
+      padding: 9px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, #ff70a6, #ff9cc5 52%, #6bc9f4);
+      box-shadow: 0 12px 26px rgba(255, 112, 166, 0.28);
+      font-size: 13px;
+      line-height: 1.15;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: left 540ms cubic-bezier(0.2, 0.8, 0.2, 1), top 540ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 180ms ease, box-shadow 180ms ease;
+      animation: songButtonIn 520ms ease forwards, songFloat 3.2s ease-in-out infinite;
+      animation-delay: var(--delay, 0ms), calc(var(--delay, 0ms) + 560ms);
+    }
+
+    .song-button:hover,
+    .song-button.is-picked {
+      filter: saturate(1.15) brightness(1.03);
+      box-shadow: 0 16px 34px rgba(107, 201, 244, 0.32);
+    }
+
+    .song-button.is-picked {
+      background: linear-gradient(135deg, #ff4f93, #ff82b4 48%, #41b7ec);
+    }
+
+    .song-button.is-moving {
+      opacity: 1;
+      animation: songWiggle 540ms ease, songFloat 3.2s ease-in-out infinite 540ms;
+    }
+
+    .flying {
+      position: fixed;
+      z-index: 4;
+      left: 50%;
+      top: 50%;
+      pointer-events: none;
+      animation: fly 1.7s ease-out forwards;
+      font-size: clamp(20px, 6vw, 30px);
+      will-change: transform, opacity;
+    }
+
+    .flash {
+      animation: softFlash 760ms ease;
+    }
+
+    @keyframes fly {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(20px) scale(0.7) rotate(0deg);
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) translate(var(--x), -180px) scale(1.55) rotate(var(--r));
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes floaty {
+      0%,
+      100% {
+        transform: translate(-50%, -42%) rotate(-4deg);
+      }
+
+      50% {
+        transform: translate(-50%, -50%) rotate(5deg);
+      }
+    }
+
+    @keyframes twinkle {
+      0%,
+      100% {
+        transform: scale(0.88) rotate(-8deg);
+        opacity: 0.72;
+      }
+
+      50% {
+        transform: scale(1.08) rotate(8deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes shine {
+      0% {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+
+      25% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+    }
+
+    @keyframes softFlash {
+      0% {
+        filter: brightness(1);
+      }
+
+      35% {
+        filter: brightness(1.25);
+      }
+
+      100% {
+        filter: brightness(1);
+      }
+    }
+
+    @keyframes stageIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes songButtonIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(14px) scale(0.78) rotate(-6deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(0) scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes songFloat {
+      0%,
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(0) rotate(-1deg);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) translateY(-6px) rotate(1deg);
+      }
+    }
+
+    @keyframes songWiggle {
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      35% {
+        transform: translate(-50%, -50%) scale(1.08) rotate(-3deg);
+      }
+
+      70% {
+        transform: translate(-50%, -50%) scale(0.96) rotate(3deg);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        align-items: start;
+        padding-block: 24px;
+      }
+
+      .wrap {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .intro {
+        text-align: center;
+      }
+
+      h1,
+      .lead {
+        margin-inline: auto;
+      }
+
+      .mini-row {
+        justify-content: center;
+      }
+
+      .music-stage {
+        min-height: 390px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .page {
+        padding-inline: 12px;
+      }
+
+      .kicker,
+      .mini-note {
+        font-size: 13px;
+      }
+
+      .card {
+        padding-inline: 18px;
+      }
+
+      .card::before {
+        inset: 10px;
+      }
+
+      button {
+        font-size: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="wrap" aria-label="Кнопка, яка змінює настрій сайту">
+      <div class="intro">
+
+        <h1 id="headline">Не тицяй опівночі</h1>
+        <p class="lead" id="lead">Хорор вайб, далі краще не продовжувати... брррр</p>
+
+        <div class="mini-row" aria-hidden="true">
+          
+        </div>
+      </div>
+
+      <article class="card">
+        <div class="sticker" aria-hidden="true">
+          <div class="scene"></div>
+          <div class="badge" id="badge">!</div>
+          <div class="spark one">✦</div>
+          <div class="spark two">✧</div>
+          <div class="spark three">?</div>
+        </div>
+
+        <h2 class="card-title" id="cardTitle">Малявці краще не натискати...</h2>
+        <p class="card-copy" id="cardCopy">УУУУУ</p>
+
+        <div class="button-row">
+          <button type="button" id="messageButton">БІЙСЯ</button>
+        </div>
+
+        <div class="message" id="message" aria-live="polite">Далі твоє життя поділиться на до і після я попереджав</div>
+        <div class="music-stage" id="musicStage" aria-label="Музичні кнопки для відгуків"></div>
+
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const musicReviews = [
+      {
+        artist: "Один в каное",
+        rank: "1",
+        review: "Один в каное я б поставив першим. Це ніжно, чесно і так, ніби пісня сідає поруч та говорить з тобою пошепки."
+      },
+      {
+        artist: "Kozak System",
+        rank: "2",
+        review: "Kozak System для моменту, коли хочеться трохи вогню. Там є драйв, український нерв і відчуття, що настрій зараз підніметься."
+      },
+      {
+        artist: "Vivienne Mort",
+        rank: "3",
+        review: "Vivienne Mort звучить темно, красиво і трохи театрально. Думаю, це може зайти, якщо хочеться чогось глибшого за просто фон."
+      },
+      {
+        artist: "The Unsleeping",
+        rank: "4",
+        review: "The Unsleeping я б залишив як свіжий варіант. Нервово, живо, з характером, ніби місто вночі раптом стало піснею."
+      },
+      {
+        artist: "Latexfauna",
+        rank: "5",
+        review: "Latexfauna це легкість, іронія і сонячний вайб. Не для драми, а для усмішки, прогулянки і настрою без зайвого пафосу."
+      },
+      {
+        artist: "KARNA",
+        rank: "6",
+        review: "KARNA я б радив, якщо хочеться сили. Тут більше гучності, руху і такого настрою, коли сидіти спокійно вже не виходить."
+      },
+      {
+        artist: "Пиріг і Батіг",
+        rank: "7",
+        review: "Пиріг і Батіг це прямо в яблучко для поетичного настрою. Дуже українсько, атмосферно і з відчуттям старої красивої історії."
+      },
+      {
+        artist: "Сестри Тельнюк",
+        rank: "8",
+        review: "Сестри Тельнюк звучать доросло і дуже голосово. Це не випадкова пісенька, а коли хочеться слухати уважно."
+      },
+      {
+        artist: "Хейтспіч",
+        rank: "9",
+        review: "Хейтспіч для чесного і різкішого настрою. Якщо зайде, то зайде не тихенько, а з характером і внутрішнім кивком."
+      },
+      {
+        artist: "паліндром",
+        rank: "10",
+        review: "паліндром я б теж поставив близько до топу. Інтелектуально, трохи сумно, трохи красиво, ніби вечір сам написав відгук."
+      }
+    ];
+
+    const buttonPositions = [
+      { x: 24, y: 14 },
+      { x: 52, y: 13 },
+      { x: 77, y: 20 },
+      { x: 28, y: 35 },
+      { x: 70, y: 38 },
+      { x: 45, y: 54 },
+      { x: 78, y: 60 },
+      { x: 23, y: 72 },
+      { x: 51, y: 83 },
+      { x: 75, y: 84 }
+    ];
+
+    const cuteTexts = {
+      kicker: "💌 хорор скасовано, милота активована",
+      headline: "Еххх, ну ось нажала а тут...",
+      lead: "Тут, до речі, відгук до пісень для тебе. Я прикинув, що може зайти прямо в яблучко.",
+      noteOne: "🌸 режим: м'якенько",
+      noteTwo: "🎧 серце: слухає",
+      cardTitle: "Музичний відгук",
+      cardCopy: "Тицяй по назвах. Кнопки трохи соромляться, тому постійно з'являються в різних місцях.",
+      button: "Перемішати кнопки 🎧",
+      badge: "♪"
+    };
+
+    const button = document.getElementById("messageButton");
+    const messageBox = document.getElementById("message");
+    const musicStage = document.getElementById("musicStage");
+    const counter = document.getElementById("counter");
+    const badge = document.getElementById("badge");
+    const floaties = {
+      spooky: ["✦", "✧", "!", "?", "☾"],
+      cute: ["💗", "💖", "💘", "🌸", "✨", "♡"]
+    };
+
+    let count = 0;
+    let previousReviewIndex = -1;
+    let isCute = false;
+    let buttonsRendered = false;
+
+    function setText(id, text) {
+      const element = document.getElementById(id);
+
+      if (element) {
+        element.textContent = text;
+      }
+    }
+
+    function switchToCuteMode() {
+      isCute = true;
+      document.body.classList.add("cute-mode", "flash");
+
+      Object.entries(cuteTexts).forEach(([id, text]) => {
+        if (id === "button") {
+          button.textContent = text;
+          return;
+        }
+
+        if (id === "badge") {
+          if (badge) {
+            badge.textContent = text;
+          }
+
+          return;
+        }
+
+        setText(id, text);
+      });
+
+      renderMusicButtons();
+      window.setTimeout(() => document.body.classList.remove("flash"), 820);
+    }
+
+    function pickRandomReviewIndex() {
+      let nextIndex = Math.floor(Math.random() * musicReviews.length);
+
+      if (musicReviews.length > 1) {
+        while (nextIndex === previousReviewIndex) {
+          nextIndex = Math.floor(Math.random() * musicReviews.length);
+        }
+      }
+
+      return nextIndex;
+    }
+
+    function showMusicReview(index) {
+      const review = musicReviews[index];
+      const title = document.createElement("span");
+      const text = document.createElement("span");
+
+      previousReviewIndex = index;
+      title.className = "message-artist";
+      title.textContent = `${review.rank}. ${review.artist}`;
+      text.textContent = review.review;
+      messageBox.classList.add("is-changing");
+
+      window.setTimeout(() => {
+        messageBox.textContent = "";
+        messageBox.append(title, text);
+        messageBox.classList.remove("is-changing");
+      }, 150);
+    }
+
+    function renderMusicButtons() {
+      if (!musicStage || buttonsRendered) {
+        return;
+      }
+
+      musicStage.textContent = "";
+
+      musicReviews.forEach((review, index) => {
+        const songButton = document.createElement("button");
+
+        songButton.type = "button";
+        songButton.className = "song-button";
+        songButton.textContent = `${review.rank}. ${review.artist}`;
+        songButton.style.setProperty("--delay", `${index * 70}ms`);
+
+        songButton.addEventListener("click", () => {
+          musicStage.querySelectorAll(".song-button").forEach((item) => item.classList.remove("is-picked"));
+          songButton.classList.add("is-picked");
+          showMusicReview(index);
+          shuffleMusicButtons();
+
+          for (let i = 0; i < 6; i += 1) {
+            window.setTimeout(() => createFloaty("cute"), i * 45);
+          }
+        });
+
+        musicStage.appendChild(songButton);
+      });
+
+      buttonsRendered = true;
+      shuffleMusicButtons();
+    }
+
+    function shuffleMusicButtons() {
+      if (!musicStage) {
+        return;
+      }
+
+      const buttons = Array.from(musicStage.querySelectorAll(".song-button"));
+      const positions = [...buttonPositions].sort(() => Math.random() - 0.5);
+
+      buttons.forEach((songButton, index) => {
+        const position = positions[index % positions.length];
+
+        songButton.style.left = `${position.x}%`;
+        songButton.style.top = `${position.y}%`;
+        songButton.classList.remove("is-moving");
+        void songButton.offsetWidth;
+        songButton.classList.add("is-moving");
+      });
+    }
+
+    function showMessage() {
+      count += 1;
+
+      if (counter) {
+        counter.textContent = `Натискань: ${count}`;
+      }
+
+      if (!isCute) {
+        switchToCuteMode();
+      }
+
+      showMusicReview(count === 1 ? 0 : pickRandomReviewIndex());
+      shuffleMusicButtons();
+
+      for (let i = 0; i < 8; i += 1) {
+        window.setTimeout(() => createFloaty("cute"), i * 52);
+      }
+    }
+
+    function createFloaty(type) {
+      const rect = button.getBoundingClientRect();
+      const item = document.createElement("span");
+      const list = floaties[type] || floaties.cute;
+      const x = `${Math.random() * 190 - 95}px`;
+      const rotation = `${Math.random() * 80 - 40}deg`;
+
+      item.className = "flying";
+      item.textContent = list[Math.floor(Math.random() * list.length)];
+      item.style.left = `${rect.left + rect.width / 2}px`;
+      item.style.top = `${rect.top + rect.height / 2}px`;
+      item.style.setProperty("--x", x);
+      item.style.setProperty("--r", rotation);
+
+      document.body.appendChild(item);
+      window.setTimeout(() => item.remove(), 1750);
+    }
+
+    button.addEventListener("click", showMessage);
+  </script>
+</body>
+</html>
